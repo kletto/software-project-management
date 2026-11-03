@@ -1,8 +1,7 @@
 """
 Фаза 2: распределение задач фазы 3 между участниками (задача о назначениях, целочисленное программирование).
 
-Запуск:
-    python phase2_solve.py phase-2.xlsx
+Запуск: uv run solve.py
 
 Скрипт читает листы «Задачи», «Предпочтения», «Параметры», решает задачу (scipy.optimize.milp, решатель HiGHS),
 записывает 0/1 в ячейки C5:E… листа «Распределение» и печатает результат и анализ чувствительности к допуску Δ.
@@ -16,6 +15,7 @@
           Σ_i x[i,j] ≥ k                            – у каждого не меньше k задач
           x[a,j] = x[b,j]  для заданных пар (a, b)  – связанные задачи делает один человек
 """
+
 import sys
 import numpy as np
 from openpyxl import load_workbook
@@ -71,7 +71,7 @@ def solve(h, pref, delta, kmin, pairs):
 
 
 if __name__ == "__main__":
-    path = sys.argv[1] if len(sys.argv) > 1 else "phase-2.xlsx"
+    path = sys.argv[1] if len(sys.argv) > 1 else "../phase-2.xlsx"
     names, tasks, h, pref, delta, kmin, pairs = read(path)
     x, total = solve(h, pref, delta, kmin, pairs)
     if x is None:
